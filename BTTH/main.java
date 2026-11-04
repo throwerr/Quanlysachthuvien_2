@@ -1,107 +1,146 @@
 import java.util.Scanner;
+// ==========================================
+// 1. LOP DOI TUONG SACH (Dinh nghia chung)
+// ==========================================
+class Sach {
+    String maSach;
+    String tenSach;
+    int soLuong;
+    double gia;
+
+    // Ham nhap thong tin 1 cuon sach
+    public void nhapSach(Scanner scanner) {
+        System.out.print("   + Nhap ma sach: ");
+        maSach = scanner.nextLine();
+        System.out.print("   + Nhap ten sach: ");
+        tenSach = scanner.nextLine();
+        System.out.print("   + Nhap so luong: ");
+        soLuong = scanner.nextInt();
+        System.out.print("   + Nhap gia tien: ");
+        gia = scanner.nextDouble();
+        scanner.nextLine(); // Doc bo ky tu enter thua
+    }
+
+    // Ham hien thi thong tin sach
+    public void hienThi() {
+        System.out.printf("   Ma: %-10s | Ten: %-25s | So luong: %-5d | Gia: %,.0f VND\n", 
+                          maSach, tenSach, soLuong, gia);
+    }
+}
 
 public class main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        String maSach, tenSach, tacGia;
-        int namXuatBan, soLuong;
-        double donGia;
+    // ==========================================
+    // CACH 1: LAM CO BAN 
+    // ==========================================
 
+    // Bai 1: Nhap n sach bang vong lap
+    public static Sach[] bai1_NhapDanhSachSach(Scanner scanner) {
+        System.out.println("\n--- BAI 1: NHAP DANH SACH SACH ---");
+        System.out.print("Nhap so luong sach (n): ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Bo dong trong
 
-        System.out.print("Nhap ma sach: ");
-        maSach = sc.nextLine();
-        System.out.print("Nhap ten sach: ");
-        tenSach = sc.nextLine();
-        System.out.print("Nhap tac gia: ");
-        tacGia = sc.nextLine();
-        System.out.print("Nhap nam xuat ban: ");
-        namXuatBan = Integer.parseInt(sc.nextLine());
-        System.out.print("Nhap don gia: ");
-        donGia = Double.parseDouble(sc.nextLine());
-        System.out.print("Nhap so luong: ");
-        soLuong = Integer.parseInt(sc.nextLine());
+        Sach[] ds = new Sach[n];
+        for (int i = 0; i < n; i++) {
+            System.out.println("Nhap thong tin cho cuon sach thu " + (i + 1) + ":");
+            ds[i] = new Sach();
+            ds[i].nhapSach(scanner);
+        }
+        return ds;
+    }
 
+    // Bai 2: Tinh tong so luong va tong gia tri sach
+    public static void bai2_TinhTong(Sach[] ds) {
+        System.out.println("\n--- BAI 2: TINH TONG SO LUONG VA GIA TRI ---");
+        if (ds == null || ds.length == 0) {
+            System.out.println("Chua co du lieu sach! Vui long nhap sach truoc.");
+            return;
+        }
 
-        System.out.println("\n--- THONG TIN SACH ---");
-        System.out.println("Ma sach: " + maSach);
-        System.out.println("Ten sach: " + tenSach);
-        System.out.println("Tac gia: " + tacGia);
-        System.out.println("Nam xuat ban: " + namXuatBan);
-        System.out.println("Don gia: " + donGia);
-        System.out.println("So luong: " + soLuong);
+        int tongSoLuong = 0;
+        double tongGiaTri = 0;
 
+        for (int i = 0; i < ds.length; i++) {
+            tongSoLuong += ds[i].soLuong;
+            tongGiaTri += (ds[i].soLuong * ds[i].gia);
+        }
 
+        System.out.println("-> Tong so luong sach hien co: " + tongSoLuong);
+        System.out.printf("-> Tong gia tri kho sach: %,.0f VND\n", tongGiaTri);
+    }
 
-        System.out.println("\n--- KIEM TRA SACH ---");
-        if (donGia <= 0) {
-            System.out.println("Don gia khong hop le!");
-        } else if (soLuong < 0) {
-            System.out.println("So luong khong hop le!");
-        } else if (namXuatBan <= 0 || namXuatBan > 2026) {
-            System.out.println("Nam xuat ban khong hop le!");
-        } else {
-            System.out.println("Thong tin sach hop le!");
+    // Bai 4: Tim sach theo ma
+    public static void bai4_TimKiemTheoMa(Sach[] ds, Scanner scanner) {
+        System.out.println("\n--- BAI 4: TIM SACH THEO MA ---");
+        if (ds == null || ds.length == 0) {
+            System.out.println("Chua co du lieu sach! Vui long nhap sach truoc.");
+            return;
+        }
 
+        System.out.print("Nhap ma sach can tim: ");
+        String maCanTim = scanner.nextLine();
 
-            double thanhTien = donGia * soLuong;
-            System.out.println("Thanh tien: " + thanhTien);
-            double phiVanChuyen = thanhTien * 0.05;
-            System.out.println("Phi van chuyen: " + phiVanChuyen);
-            double tongTien = thanhTien + phiVanChuyen;
-            System.out.println("Tong tien nhap: " + tongTien);
-
-
-            System.out.println("\n--- PHAN LOAI GIA ---");
-            if (donGia < 50000) {
-                System.out.println("Sach gia thap");
-            } else if (donGia < 100000) {
-                System.out.println("Sach gia trung binh");
-            } else if (donGia <= 200000) {
-                System.out.println("Sach gia cao");
-            } else {
-                System.out.println("Sach gia dac biet");
-            }
-
-
-            System.out.println("\n--- PHAN LOAI TON KHO ---");
-            if (soLuong == 0) {
-                System.out.println("Het sach");
-            } else if (soLuong <= 5) {
-                System.out.println("Sap het");
-            } else if (soLuong <= 20) {
-                System.out.println("Con it");
-            } else {
-                System.out.println("Con nhieu");
-            }
-
-
-            System.out.println("\n--- LOAI SACH ---");
-            System.out.println("1. Sach giao khoa");
-            System.out.println("2. Sach tham khao");
-            System.out.println("3. Sach chuyen nganh");
-            System.out.println("4. Sach khac");
-            System.out.print("Chon loai sach (1-4): ");
-
-            int loaiSach = Integer.parseInt(sc.nextLine());
-            switch (loaiSach) {
-                case 1:
-                    System.out.println("Sach giao khoa");
-                    break;
-                case 2:
-                    System.out.println("Sach tham khao");
-                    break;
-                case 3:
-                    System.out.println("Sach chuyen nganh");
-                    break;
-                case 4:
-                    System.out.println("Sach khac");
-                    break;
-                default:
-                    System.out.println("Loai sach khong hop le!");
+        boolean timThay = false;
+        for (int i = 0; i < ds.length; i++) 
+            {
+            if (ds[i].maSach.equalsIgnoreCase(maCanTim)) {
+                System.out.println("-> Tim thay ket qua:");
+                ds[i].hienThi();
+                timThay = true;
+                break; 
             }
         }
 
-        sc.close();
+        if (!timThay) {
+            System.out.println("-> Khong tim thay sach nao co ma: " + maCanTim);
+        }
+    }
+    // ==========================================
+    // Menu lap hoat động lien tuc - Bai 3
+    // ==========================================
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Sach[] danhSach = null; // Mang luu tru danh sach sach
+        int chon;
+
+        // Vong lap do-while giu menu chay lien tuc den khi chon 0 (Thoat)
+        do {
+            System.out.println("\n==========================================");
+            System.out.println("   CHUONG TRINH QUAN LY THU VIEN (TUAN 5) ");
+            System.out.println("==========================================");
+            System.out.println("1. Nhap danh sach n sach (Bai 1)");
+            System.out.println("2. Xem danh sach & Tinh tong (Bai 2)");
+            System.out.println("3. Tim kiem sach theo ma (Bai 4)");
+            System.out.println("0. Thoat chuong trinh");
+            System.out.println("------------------------------------------");
+            System.out.print("Moi ban chon chuc nang (0-3): ");
+            chon = scanner.nextInt();
+            scanner.nextLine(); // Bo thua ky tu enter
+
+            switch (chon) {
+                case 1:
+                    danhSach = bai1_NhapDanhSachSach(scanner);
+                    break;
+                case 2:
+                    if (danhSach != null) {
+                        System.out.println("\n--- DANH SACH SACH HIEN CO ---");
+                        for (Sach s : danhSach) {
+                            s.hienThi();
+                        }
+                    }
+                    bai2_TinhTong(danhSach);
+                    break;
+                case 3:
+                    bai4_TimKiemTheoMa(danhSach, scanner);
+                    break;
+                case 0:
+                    System.out.println("Da thoat chuong trinh. Cam on ban!");
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le, vui long chon lai tu 0 den 3!");
+            }
+        } while (chon != 0);
+        scanner.close();
     }
 }
