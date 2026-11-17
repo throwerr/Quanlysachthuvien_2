@@ -1,4 +1,3 @@
-import java.util.Scanner;
 public class Sach {
     private String maSach;
     private String tieuDe;
@@ -6,21 +5,23 @@ public class Sach {
     private int namXuatBan;
     private int soLuong;
 
-    // Khoi tao khong doi
     public Sach() {
+        namXuatBan = 2026;
+        soLuong = 0;
     }
 
-    // Khoi tao co doi
     public Sach(String maSach, String tieuDe, String tacGia,
                 int namXuatBan, int soLuong) {
         this.maSach = maSach;
         this.tieuDe = tieuDe;
         this.tacGia = tacGia;
-        this.namXuatBan = namXuatBan;
-        this.soLuong = soLuong;
+        this.namXuatBan = 2026;
+        this.soLuong = 0;
+
+        setNamXuatBan(namXuatBan);
+        setSoLuong(soLuong);
     }
 
-    // Khoi tao sao chep
     public Sach(Sach sach) {
         this.maSach = sach.maSach;
         this.tieuDe = sach.tieuDe;
@@ -58,7 +59,13 @@ public class Sach {
     }
 
     public void setNamXuatBan(int namXuatBan) {
-        this.namXuatBan = namXuatBan;
+        int namHienTai = 2026;
+
+        if (namXuatBan > 0 && namXuatBan <= namHienTai) {
+            this.namXuatBan = namXuatBan;
+        } else {
+            System.out.println("Nam xuat ban khong hop le!");
+        }
     }
 
     public int getSoLuong() {
@@ -66,34 +73,19 @@ public class Sach {
     }
 
     public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
-
-    public void Nhap(Scanner sc) {
-        System.out.print("Nhap ma sach: ");
-        this.maSach = sc.nextLine();
-
-        System.out.print("Nhap tieu de: ");
-        this.tieuDe = sc.nextLine();
-
-        System.out.print("Nhap tac gia: ");
-        this.tacGia = sc.nextLine();
-
-        System.out.print("Nhap nam xuat ban: ");
-        this.namXuatBan = sc.nextInt();
-
-        System.out.print("Nhap so luong: ");
-        this.soLuong = sc.nextInt();
-
-        sc.nextLine(); // Doc bo ky tu xuong dong
+        if (soLuong >= 0) {
+            this.soLuong = soLuong;
+        } else {
+            System.out.println("So luong khong duoc am!");
+        }
     }
 
     public void hienThiThongTin() {
-        System.out.println("Ma sach: " + this.maSach);
-        System.out.println("Tieu de: " + this.tieuDe);
-        System.out.println("Tac gia: " + this.tacGia);
-        System.out.println("Nam xuat ban: " + this.namXuatBan);
-        System.out.println("So luong: " + this.soLuong);
-        System.out.println("------------------------------");
+        System.out.println("Ma sach: " + maSach);
+        System.out.println("Tieu de: " + tieuDe);
+        System.out.println("Tac gia: " + tacGia);
+        System.out.println("Nam xuat ban: " + namXuatBan);
+        System.out.println("So luong: " + soLuong);
+        System.out.println("--------------------");
     }
 }
