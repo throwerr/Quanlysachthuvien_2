@@ -1,48 +1,95 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) {
-        Sach sach1 = new Sach();
+        Scanner sc = new Scanner(System.in);
 
-        sach1.setMaSach("S01");
-        sach1.setTieuDe("Lap trinh Java");
-        sach1.setTacGia("Nguyen Van A");
-        sach1.setNamXuatBan(2024);
-        sach1.setSoLuong(10);
+        ArrayList<SachGiaoKhoa> dsGiaoKhoa =
+                new ArrayList<SachGiaoKhoa>();
 
-        Sach sach2 = new Sach(
-            "S02", "Co so du lieu", "Tran Thi B", 2023, 5
-        );
+        ArrayList<SachThamKhao> dsThamKhao =
+                new ArrayList<SachThamKhao>();
 
-        Sach sach3 = new Sach(sach1);
-        sach3.setMaSach("S03");
+        System.out.print("Nhap so dau sach giao khoa: ");
+        int n = sc.nextInt();
+        sc.nextLine();
 
-        System.out.println("THONG TIN DOC BANG GETTER:");
-        System.out.println("Ma sach: " + sach1.getMaSach());
-        System.out.println("Tieu de: " + sach1.getTieuDe());
-        System.out.println("Tac gia: " + sach1.getTacGia());
-        System.out.println("Nam xuat ban: " + sach1.getNamXuatBan());
-        System.out.println("So luong: " + sach1.getSoLuong());
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nNhap sach giao khoa thu " + (i + 1));
 
-        ArrayList<Sach> danhSach = new ArrayList<Sach>();
-
-        danhSach.add(sach1);
-        danhSach.add(sach2);
-        danhSach.add(sach3);
-
-        System.out.println("\nDANH SACH SACH:");
-
-        for (int i = 0; i < danhSach.size(); i++) {
-            danhSach.get(i).hienThiThongTin();
+            SachGiaoKhoa sach = new SachGiaoKhoa();
+            sach.Nhap(sc);
+            dsGiaoKhoa.add(sach);
         }
 
-        System.out.println("KIEM TRA DU LIEU SAI:");
+        System.out.print("\nNhap so dau sach tham khao: ");
+        int m = sc.nextInt();
+        sc.nextLine();
 
-        sach1.setNamXuatBan(0);
-        sach1.setNamXuatBan(2027);
-        sach1.setSoLuong(-5);
+        for (int i = 0; i < m; i++) {
+            System.out.println("\nNhap sach tham khao thu " + (i + 1));
 
-        System.out.println("\nTHONG TIN SAU KHI NHAP SAI:");
-        sach1.hienThiThongTin();
+            SachThamKhao sach = new SachThamKhao();
+            sach.Nhap(sc);
+            dsThamKhao.add(sach);
+        }
+
+        System.out.println("\n===== DANH SACH SACH GIAO KHOA =====");
+
+        for (int i = 0; i < dsGiaoKhoa.size(); i++) {
+            dsGiaoKhoa.get(i).Xuat();
+        }
+
+        System.out.println("\n===== DANH SACH SACH THAM KHAO =====");
+
+        for (int i = 0; i < dsThamKhao.size(); i++) {
+            dsThamKhao.get(i).Xuat();
+        }
+
+        double tongGiaoKhoa = 0;
+
+        for (int i = 0; i < dsGiaoKhoa.size(); i++) {
+            tongGiaoKhoa = tongGiaoKhoa
+                    + dsGiaoKhoa.get(i).ThanhTien();
+        }
+        double tongThamKhao = 0;
+        for (int i = 0; i < dsThamKhao.size(); i++) {
+            tongThamKhao = tongThamKhao
+                    + dsThamKhao.get(i).ThanhTien();
+        }
+        System.out.println("\nTong thanh tien sach giao khoa: "+ tongGiaoKhoa);
+        System.out.println("Tong thanh tien sach tham khao: "+ tongThamKhao);
+        double tongDonGia = 0;
+        for (int i = 0; i < dsThamKhao.size(); i++) {
+            tongDonGia = tongDonGia
+                    + dsThamKhao.get(i).getDonGia();
+        }
+        if (dsThamKhao.size() > 0) {
+            double trungBinh = tongDonGia / dsThamKhao.size();
+
+            System.out.println("Trung binh don gia sach tham khao: "
+                    + trungBinh);
+        } else {
+            System.out.println("Khong co sach tham khao de tinh trung binh.");
+        }
+
+        System.out.print("\nNhap nha xuat ban X can tim: ");
+        String x = sc.nextLine();
+
+        System.out.println("\n===== SACH GIAO KHOA CUA NXB " + x + " =====");
+
+        boolean timThay = false;
+
+        for (int i = 0; i < dsGiaoKhoa.size(); i++) {
+            if (dsGiaoKhoa.get(i).getNhaXuatBan().equalsIgnoreCase(x)) {
+                dsGiaoKhoa.get(i).Xuat();
+                timThay = true;
+            }
+        }
+        if (timThay == false) {
+            System.out.println("Khong tim thay sach giao khoa cua nha xuat ban nay.");
+        }
+        sc.close();
     }
 }
